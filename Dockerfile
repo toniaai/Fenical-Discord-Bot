@@ -1,7 +1,7 @@
 FROM python:latest
-ADD . /Discord-Selfbot
+ADD . /Fenical-Discord-Bot
 
-RUN cd Discord-Selfbot && \
+RUN cd Fenical-Discord-Bot && \
     pip install -r requirements.txt
 
-CMD ["/Discord-Selfbot/run_linuxmac.sh"]
+CMD ["/Fenical-Discord-Bot/run_linuxmac.sh"]

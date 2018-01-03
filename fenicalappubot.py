@@ -27,7 +27,7 @@ from discord.ext import commands
 
 
 def parse_cmd_arguments():  # allows for arguments
-    parser = argparse.ArgumentParser(description="Discord-Selfbot")
+    parser = argparse.ArgumentParser(description="Fenical-Appu-Bot")
     parser.add_argument("-test", "--test-run",  # test run flag for Travis
                         action="store_true",
                         help="Makes the bot quit before trying to log in")
@@ -78,7 +78,7 @@ def wizard():
         print('Cannot use setup Wizard becaue of silent mode')
         exit(0)
     config = {}
-    print("Welcome to Appu's Discord Selfbot!\nThis setup wizard will guide you through the initial configuration required to get the bot working.\nThe choices you make in this wizard can be changed at any time by editing the settings/config.json file.\n")
+    print("Welcome to the Fenical Appu Discord Bot!\nThis setup wizard will guide you through the initial configuration required to get the bot working.\nThe choices you make in this wizard can be changed at any time by editing the settings/config.json file.\n")
     
     print("The first step is to set up your token.")
     print("Go into your Discord window and press Ctrl+Shift+I (Ctrl+Opt+I can also work on macOS)")
@@ -107,7 +107,7 @@ def wizard():
     print("-------------------------------------------------------------")
     config["bot_identifier"] = input("| ").strip()
     
-    input("\nThis concludes the setup wizard. For further setup options (ex. setting up google image search), refer to the Discord Selfbot wiki.\n\nYour settings:\nInvoke commands with: {cmd}  Ex: {cmd}ping\nInvoke custom commands with: {custom}  Ex: {custom}get good\nYou may restart this wizard at any time by deleting config.json in the settings folder.\n\nPress Enter to start the bot....\n".format(cmd=config["cmd_prefix"], custom=config["customcmd_prefix"]))
+    input("\nThis concludes the setup wizard. For further setup options (ex. setting up google image search), refer to the wiki.\n\nYour settings:\nInvoke commands with: {cmd}  Ex: {cmd}ping\nInvoke custom commands with: {custom}  Ex: {custom}get good\nYou may restart this wizard at any time by deleting config.json in the settings folder.\n\nPress Enter to start the bot....\n".format(cmd=config["cmd_prefix"], custom=config["customcmd_prefix"]))
   
     print("Starting up...")
     with open('settings/config.json', encoding='utf-8', mode="w") as f:
@@ -179,7 +179,7 @@ for f in samples:
                 json.dump(fields, g, sort_keys=True, indent=4)
 
 
-bot = commands.Bot(command_prefix=get_config_value('config', 'cmd_prefix'), description='''Selfbot by appu1232''', self_bot=True)
+bot = commands.Bot(command_prefix=get_config_value('config', 'cmd_prefix'), description='''Bot based on appu1232 codebase''')
 
 if __name__ == "__main__":
     _runs_in_loop = False

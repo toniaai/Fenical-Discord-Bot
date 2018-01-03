@@ -6,9 +6,9 @@ for /f %%i in ('git rev-parse --abbrev-ref HEAD') do set BRANCH=%%i
 
 python -V >nul 2>&1 || goto :python
 git init . >nul || goto :git
-git remote add origin https://github.com/appu1232/Discord-Selfbot.git >nul 2>&1
+git remote add origin https://github.com/thomas-hori/Fenical-Discord-Bot.git >nul 2>&1
 get fetch origin master >nul 2>&1
-if not exist appuselfbot.py (
+if not exist fenicalappubot.py (
     echo This seems to be your first run. The setup will now proceed to download all required files. They will be downloaded to the same location as where this run.bat file is.
     pause
     git fetch --all
@@ -86,5 +86,5 @@ goto run
 	echo[
 	echo Requirements satisfied.
 	echo Starting the bot (this may take a minute or two)...
-	python loopself.py
+	python loopbot.py
 	if %ERRORLEVEL% == 15 goto update

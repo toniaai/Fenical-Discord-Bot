@@ -14,7 +14,7 @@ updater () {
 	if hash git 2>/dev/null; then
 		echo "Fetching origin"
 		git init >/dev/null 2>&1
-		git remote add origin https://github.com/appu1232/Discord-Selfbot.git >/dev/null 2>&1
+		git remote add origin https://github.com/thomas-hori/Fenical-Discord-Bot.git >/dev/null 2>&1
 		git fetch origin $branch
 		if [ -d "settings" ]; then
 			cp -r settings settings_backup
@@ -86,7 +86,7 @@ run_bot() {
         echo "Upgrading requirements"
         if python3 -m pip install --user --upgrade -r requirements.txt; then
             echo "Starting bot..."
-            python3 loopself.py
+            python3 loopbot.py
             ret=$?
             if [ $ret == "15" ]; then
                 min_updater
@@ -113,7 +113,7 @@ run_bot() {
         echo "Upgrading requirements"
         if python -m pip install --user -r requirements.txt; then
             echo "Starting bot..."
-            python loopself.py
+            python loopbot.py
             ret=$?
             if [ $ret == "15" ]; then
                 min_updater

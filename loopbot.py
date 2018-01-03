@@ -13,6 +13,6 @@ while True:
         if kill == 'update':
             exit(15)
         break
-    params = [sys.executable, 'appuselfbot.py']
+    params = [sys.executable, 'fenicalappubot.py']
     params.extend(sys.argv[1:])
     subprocess.call(params)

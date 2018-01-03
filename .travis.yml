@@ -5,11 +5,11 @@ python:
 install:
   - pip install -r requirements.txt
 script:
-  - python -m compileall ./appuselfbot.py
+  - python -m compileall ./fenicalappubot.py
   - python -m compileall ./cogs
-  - python ./appuselfbot.py --test-run
+  - python ./fenicalappubot.py --test-run
 cache: pip
 notifications:
   email: false
-dist: trusty
+dist: xenial
 os: linux
