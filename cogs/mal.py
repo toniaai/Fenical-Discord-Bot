@@ -333,7 +333,8 @@ class Mal:
         await fetch.delete()
         await ctx.message.delete()
 
-        # get_char on each character in the va role list
+        # remove for the time being until I check this properly.
+        '''# get_char on each character in the va role list
         if more_info:
             all_chars = []
             for character in selection.voice_acting:
@@ -368,7 +369,7 @@ class Mal:
             except ZeroDivisionError:
                 em.set_field_at(index=1, name='Roles', value='None')
                 em.set_field_at(index=2, name='Most Popular Role', value='None', inline=False)
-            await va_info.edit(content=None, embed=em)
+            await va_info.edit(content=None, embed=em)'''
 
     @mal.command(pass_context=True, name="next")
     async def next_(self, ctx, *, query):
