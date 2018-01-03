@@ -2,6 +2,8 @@
 
 Note: this excellent tool was originally developed as an unauthorised selfbot by appu1232. I am attempting to reclaim it as an authorised bot.
 
+See https://github.com/appu1232/Discord-Selfbot for the original.
+
 ## Features
 
 - Google web and image search.
