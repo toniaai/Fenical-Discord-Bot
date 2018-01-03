@@ -106,6 +106,7 @@ class Emoji:
                     await ctx.send(url)
             file.close()
 
+    '''Should work out how to do these properly with reference to requester perms. For now, disable.
     @emoji.command(pass_context=True, aliases=["steal"])
     @commands.has_permissions(manage_emojis=True)
     async def copy(self, ctx, *, msg):
@@ -161,7 +162,7 @@ class Emoji:
         if emote_length == 1:
             await ctx.send(self.bot.bot_prefix + "Successfully removed the {} emoji!".format(name))
         else:
-            await ctx.send(self.bot.bot_prefix + "Successfully removed {} emoji with the name {}.".format(emote_length, name))
+            await ctx.send(self.bot.bot_prefix + "Successfully removed {} emoji with the name {}.".format(emote_length, name))'''
 
 
 def setup(bot):
