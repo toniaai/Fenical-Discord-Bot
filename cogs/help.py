@@ -90,15 +90,15 @@ class Help(formatter.HelpFormatter):
 
         help_msg = await dest.send(content=content, embed=embeds[0])
         page_msg = await dest.send(self.bot.bot_prefix + "There are {} help pages. Send a number to see the corresponding page. Send any other message to exit.".format(len(embeds)))
-        def is_me(msg):
-            if msg.author == self.context.me and msg.channel == dest:
+        def is_asker(msg):
+            if msg.author == self.context.message.author and msg.channel == dest:
                 return True
         while True:
             await asyncio.sleep(.5)
-            reply = await self.bot.wait_for('message', check=is_me)
+            reply = await self.bot.wait_for('message', check=is_asker)
             try:
                 page_number = int(reply.content) - 1
-                await reply.delete()
+                ###await reply.delete()
                 if page_number < 0:
                     page_number = 0
                 elif page_number >= len(embeds):

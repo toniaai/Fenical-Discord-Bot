@@ -129,7 +129,7 @@ class Utility:
             write_config_value("optional_config", "24hours", "false")
             await ctx.send(self.bot.bot_prefix + "Set time to `12 hour` clock")
 
-    @commands.command(pass_context=True)
+    '''@commands.command(pass_context=True)
     async def timezone(self, ctx, *, msg):
         """Set preferred timezone. Use the timezonelist for a full list of timezones."""
         write_config_value("optional_config", "timezone", msg)
@@ -161,7 +161,7 @@ class Utility:
         """Set bot prefix"""
         write_config_value("config", "bot_identifier", msg)
         self.bot.bot_prefix = msg + ' '
-        await ctx.send(self.bot.bot_prefix + 'Prefix changed.')
+        await ctx.send(self.bot.bot_prefix + 'Prefix changed.')'''
 
     # Granted, my attempted proof of concept, which happens to be
     # (lambda:0).__class__((lambda:0).__code__.__class__(0, 0, 0, 2, 64, b'd\x00\x00d\x01\x00l\x00\x00Z\x00\x00e\x00\x00j\x01\x00d\x02\x00\x83\x01\x00\x01d\x01\x00S', (0, None, 'xeyes'), ('os', 'system'), (), 'hello', '<module>', 1, b'\x0c\x00'), {})()
@@ -245,7 +245,7 @@ class Utility:
         await msg.delete()
         await killmsg.delete()
 
-    @commands.command(aliases=['d'], pass_context=True)
+    '''@commands.command(aliases=['d'], pass_context=True)
     async def delete(self, ctx, txt=None, channel=None):
         """Deletes the last message sent or n messages sent. Ex: [p]d 5"""
         if txt:  # If number of seconds/messages are specified
@@ -279,7 +279,7 @@ class Utility:
             try:
                 await msg.delete()
             except:
-                pass
+                pass'''
 
     @commands.command(pass_context=True)
     async def spoiler(self, ctx, *, msg: str):
@@ -470,13 +470,13 @@ class Utility:
 
         await ctx.send(content=None, embed=em)
 
-    @commands.has_permissions(change_nickname=True)
+    '''@commands.has_permissions(change_nickname=True)
     @commands.command(aliases=['nick'], pass_context=True, no_pm=True)
     async def nickname(self, ctx, *, txt=None):
         """Change your nickname on a server. Leave empty to remove nick."""
         ###await ctx.message.delete()
         await ctx.message.author.edit(nick=txt)
-        await ctx.send(self.bot.bot_prefix + 'Changed nickname to: `%s`' % txt)
+        await ctx.send(self.bot.bot_prefix + 'Changed nickname to: `%s`' % txt)'''
 
     @commands.command(pass_context=True)
     async def ud(self, ctx, *, msg):
@@ -808,7 +808,7 @@ class Utility:
             embed.add_field(name="Not Loaded", value="None!", inline=True)
         await ctx.send("", embed=embed)
 
-    @commands.command(pass_context=True, aliases=['clearconsole', 'cc', 'clear'])
+    '''@commands.command(pass_context=True, aliases=['clearconsole', 'cc', 'clear'])
     async def cleartrace(self, ctx):
         """Clear the console."""
         if os.name == 'nt':
@@ -832,9 +832,9 @@ class Utility:
             pass
         print('User id: ' + str(self.bot.user.id))
         print('------')
-        await ctx.send(self.bot.bot_prefix + 'Console cleared successfully.')
+        await ctx.send(self.bot.bot_prefix + 'Console cleared successfully.')'''
         
-    @commands.command(aliases=['ra'])
+    '''@commands.command(aliases=['ra'])
     async def readall(self, ctx, msg: str = None):
         """Marks everything as read. Append `server` to your message to only clear the current server."""
         ###await ctx.message.delete()
@@ -844,7 +844,7 @@ class Utility:
         else:
             for guild in self.bot.guilds:
                 await guild.ack()
-            await ctx.send(self.bot.bot_prefix + "Marked {} guilds as read.".format(len(self.bot.guilds)))
+            await ctx.send(self.bot.bot_prefix + "Marked {} guilds as read.".format(len(self.bot.guilds)))'''
             
 
 def setup(bot):
