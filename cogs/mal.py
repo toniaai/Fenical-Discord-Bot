@@ -92,12 +92,12 @@ class Mal:
             else:
                 await ctx.send(self.bot.bot_prefix + 'No results.')
                 await fetch.delete()
-                return await ctx.message.delete()
+                return ###await ctx.message.delete()
 
             if not embed_perms(ctx.message) or link is True:
                 await ctx.send(self.bot.bot_prefix + 'https://myanimelist.net/anime/%s' % results.id)
                 await fetch.delete()
-                return await ctx.message.delete()
+                return ###await ctx.message.delete()
 
             # Formatting embed
             selection = results
@@ -136,7 +136,7 @@ class Mal:
 
             await ctx.send(embed=em)
             await fetch.delete()
-            await ctx.message.delete()
+            ###await ctx.message.delete()
         else:
             await ctx.send(self.bot.bot_prefix + 'Specify an anime to search for.')
 
@@ -165,12 +165,12 @@ class Mal:
             else:
                 await ctx.send(self.bot.bot_prefix + 'No results.')
                 await fetch.delete()
-                return await ctx.message.delete()
+                return ###await ctx.message.delete()
 
             if not embed_perms(ctx.message) or link is True:
                 await ctx.send(self.bot.bot_prefix + 'https://myanimelist.net/manga/%s' % results.id)
                 await fetch.delete()
-                return await ctx.message.delete()
+                return ###await ctx.message.delete()
 
             # Formatting embed
             selection = results
@@ -209,7 +209,7 @@ class Mal:
 
             await ctx.send(embed=em)
             await fetch.delete()
-            await ctx.message.delete()
+            ###await ctx.message.delete()
         else:
             await ctx.send(self.bot.bot_prefix + 'No results')
 
@@ -251,7 +251,7 @@ class Mal:
             char_id = re.findall('/character/(.*)/', result)
         else:
             await fetch.delete()
-            await ctx.message.delete()
+            ###await ctx.message.delete()
             return await ctx.send(self.bot.bot_prefix + 'No results.')
         try:
             selection = await self.t_client.get_character(char_id[0])
@@ -278,7 +278,7 @@ class Mal:
         em.set_footer(text='MyAnimeList Character Search')
         await ctx.send(content=None, embed=em)
         await fetch.delete()
-        await ctx.message.delete()
+        ###await ctx.message.delete()
 
     ### Temporarily removed b/c of known issue with mal api
     @mal.command(pass_context=True, alias=['actor', 'voiceactor', 'person', 'voice'])
@@ -295,7 +295,7 @@ class Mal:
             va_id = re.findall('/people/(.*)/', result)
         else:
             await fetch.delete()
-            await ctx.message.delete()
+            ###await ctx.message.delete()
             return await ctx.send(self.bot.bot_prefix + 'No results.')
 
         # No way to get va name so must parse html and grab name from title -_-
@@ -331,7 +331,7 @@ class Mal:
         em.set_footer(text='MyAnimeList Voice Actor Search')
         va_info = await ctx.send(content=None, embed=em)
         await fetch.delete()
-        await ctx.message.delete()
+        ###await ctx.message.delete()
 
         # remove for the time being until I check this properly.
         '''# get_char on each character in the va role list
@@ -383,11 +383,11 @@ class Mal:
             except Exception as e:
                 await ctx.send(self.bot.bot_prefix + ":exclamation: Oops!\n {}: {}".format(type(e).__name__, e))
                 await search.delete()
-                return await ctx.message.delete()
+                return ###await ctx.message.delete()
         else:
             await ctx.send(self.bot.bot_prefix + 'Failed to find given anime.')
             await search.delete()
-            return await ctx.message.delete()
+            return ###await ctx.message.delete()
         if anime.status == "Finished Airing":
             remaining = "This anime has finished airing!\n" + anime.air_time
         else:
@@ -398,7 +398,7 @@ class Mal:
         embed.set_author(name='MyAnimeList', icon_url='https://myanimelist.cdn-dena.com/img/sp/icon/apple-touch-icon-256.png')
         embed.set_thumbnail(url=anime.image)
         await search.delete()
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         await ctx.send(embed=embed)
 
 

@@ -62,7 +62,7 @@ class Userinfo:
                     msg = '**User Info:** ```User ID: %s\nAccount Created: %s\nAvatar url:%s```' % (user.id, user.created_at.__format__('%A, %d. %B %Y @ %H:%M:%S'), avi)
                 await ctx.send(self.bot.bot_prefix + msg)
 
-            await ctx.message.delete()
+            ###await ctx.message.delete()
 
     @userinfo.command()
     async def avi(self, ctx, txt: str = None):
@@ -93,7 +93,7 @@ class Userinfo:
             await ctx.send(embed=em)
         else:
             await ctx.send(self.bot.bot_prefix + avi)
-        await ctx.message.delete()
+        ###await ctx.message.delete()
 
 
 def setup(bot):

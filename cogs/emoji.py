@@ -63,7 +63,7 @@ class Emoji:
         3) [p]emoji add <url> - Add a new emoji to the current server if you have the permissions.
         4) [p]emoji remove <emoji> - Remove an emoji from the current server if you have the permissions
         """
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         emojis = msg.split()
         if msg.startswith('s '):
             emojis = emojis[1:]
@@ -110,7 +110,7 @@ class Emoji:
     @emoji.command(pass_context=True, aliases=["steal"])
     @commands.has_permissions(manage_emojis=True)
     async def copy(self, ctx, *, msg):
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         msg = re.sub("<:(.+):([0-9]+)>", "\\2", msg)
 
         match = None
@@ -136,7 +136,7 @@ class Emoji:
     @emoji.command(pass_context=True)
     @commands.has_permissions(manage_emojis=True)
     async def add(self, ctx, name, url):
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         try:
             response = requests.get(url)
         except (requests.exceptions.MissingSchema, requests.exceptions.InvalidURL, requests.exceptions.InvalidSchema, requests.exceptions.ConnectionError):
@@ -152,7 +152,7 @@ class Emoji:
     @emoji.command(pass_context=True)
     @commands.has_permissions(manage_emojis=True)
     async def remove(self, ctx, name):
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         emotes = [x for x in ctx.guild.emojis if x.name == name]
         emote_length = len(emotes)
         if not emotes:

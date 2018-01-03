@@ -181,7 +181,7 @@ class Google:
     @commands.command(pass_context=True, aliases=['image', 'img'])
     async def i(self, ctx, *, query):
         """Google image search. [p]i Lillie pokemon sun and moon"""
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         config = load_optional_config()
         if query[0].isdigit():
             item = int(query[0])

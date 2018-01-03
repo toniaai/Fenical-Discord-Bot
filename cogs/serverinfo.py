@@ -97,7 +97,7 @@ class Server:
                 msg = '**Server Info:** ```Name: %s\nOwner: %s\nMembers: %s\nCurrently Online: %s\nRegion: %s\nVerification Level: %s\nHighest Role: %s\nCreated At: %s\nServer avatar: : %s```' % (
                     server.name, server.owner, server.member_count, online, server.region, str(server.verification_level), server.role_hierarchy[0], server.created_at.__format__('%A, %d. %B %Y @ %H:%M:%S'), server.icon_url)
                 await ctx.send(self.bot.bot_prefix + msg)
-            await ctx.message.delete()
+            ###await ctx.message.delete()
 
     @serverinfo.command(pass_context=True)
     async def emojis(self, ctx, msg: str = None):
@@ -110,7 +110,7 @@ class Server:
             server = ctx.message.guild
         emojis = [str(x) for x in server.emojis]
         await ctx.send("".join(emojis))
-        await ctx.message.delete()
+        ###await ctx.message.delete()
 
     @serverinfo.command(pass_context=True)
     async def avi(self, ctx, msg: str = None):
@@ -127,7 +127,7 @@ class Server:
             await ctx.send(embed=em)
         else:
             await ctx.send(self.bot.bot_prefix + server.icon_url)
-        await ctx.message.delete()
+        ###await ctx.message.delete()
 
     @serverinfo.command(pass_context=True)
     async def role(self, ctx, *, msg):
@@ -154,9 +154,9 @@ class Server:
                     em.add_field(name='All users', value='There are no users in this role!', inline=False)
                 em.add_field(name='Created at', value=role.created_at.__format__('%x at %X'))
                 em.set_thumbnail(url='http://www.colorhexa.com/%s.png' % str(role.color).strip("#"))
-                await ctx.message.delete()
+                ###await ctx.message.delete()
                 return await ctx.send(content=None, embed=em)
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         await ctx.send(self.bot.bot_prefix + 'Could not find role ``%s``' % msg)
 
     @commands.command(aliases=['channel', 'cinfo', 'ci'], pass_context=True, no_pm=True)

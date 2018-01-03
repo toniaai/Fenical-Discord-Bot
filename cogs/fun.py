@@ -180,7 +180,7 @@ class Fun:
             em.add_field(name='\u2753 Question', value=msg)
             em.add_field(name='\ud83c\udfb1 8ball', value=self.ball[answer], inline=False)
             await ctx.send(content=None, embed=em)
-            await ctx.message.delete()
+            ###await ctx.message.delete()
         else:
             await ctx.send('\ud83c\udfb1 ``{}``'.format(random.choice(self.ball)))
 
@@ -195,7 +195,7 @@ class Fun:
         """Creates a lmgtfy link. Ex: [p]l2g how do i become cool."""
         lmgtfy = 'http://lmgtfy.com/?q='
         await ctx.send(self.bot.bot_prefix + lmgtfy + urllib.parse.quote_plus(msg.lower().strip()))
-        await ctx.message.delete()
+        ###await ctx.message.delete()
 
     @commands.command(pass_context=True)
     async def vowelreplace(self, ctx, replace, *, msg):
@@ -206,7 +206,7 @@ class Fun:
                 result += replace
             else:
                 result += letter
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         await ctx.send(result)
 
     @commands.group(pass_context=True, invoke_without_command=True)
@@ -219,7 +219,7 @@ class Fun:
                 if len(msg) > 2000:
                     await ctx.send(self.bot.bot_prefix + 'Message too long, RIP.')
                 else:
-                    await ctx.message.delete()
+                    ###await ctx.message.delete()
                     await ctx.send(self.bot.bot_prefix + '```\n{}\n```'.format(msg))
             else:
                 await ctx.send(
@@ -238,7 +238,7 @@ class Fun:
     @commands.command(pass_context=True)
     async def dice(self, ctx, *, msg="1"):
         """Roll dice. Optionally input # of dice and # of sides. Ex: [p]dice 5 12"""
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         invalid = 'Invalid syntax. Ex: `>dice 4` - roll four normal dice. `>dice 4 12` - roll four 12 sided dice.'
         dice_rolls = []
         dice_roll_ints = []
@@ -272,7 +272,7 @@ class Fun:
     @commands.command(pass_context=True)
     async def regional(self, ctx, *, msg):
         """Replace letters with regional indicator emojis"""
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         msg = list(msg)
         regional_list = [self.regionals[x.lower()] if x.isalnum() or x in ["!", "?"] else x for x in msg]
         regional_output = '\u200b'.join(regional_list)
@@ -281,7 +281,7 @@ class Fun:
     @commands.command(pass_context=True)
     async def space(self, ctx, *, msg):
         """Add n spaces between each letter. Ex: [p]space 2 thicc"""
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         if msg.split(' ', 1)[0].isdigit():
             spaces = int(msg.split(' ', 1)[0]) * ' '
             msg = msg.split(' ', 1)[1].strip()
@@ -295,7 +295,7 @@ class Fun:
     @commands.command(pass_context=True, aliases=['r'])
     async def react(self, ctx, msg: str, msg_id="last", channel="current", prefer_combine: bool = False):
         """Add letter(s) as reaction to previous message. Ex: [p]react hot"""
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         msg = msg.lower()
 
         msg_id = None if not msg_id.isdigit() else int(msg_id)

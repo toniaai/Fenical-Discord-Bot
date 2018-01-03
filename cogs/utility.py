@@ -75,7 +75,7 @@ class Utility:
         else:
             msg = '**Local Date and Time:** ```{:Time: %H:%M:%S\nDate: %Y-%m-%d```}'.format(dandt)
             await ctx.send(self.bot.bot_prefix + msg)
-        await ctx.message.delete()
+        ###await ctx.message.delete()
 
     @commands.command(pass_context=True)
     async def time(self, ctx):
@@ -90,7 +90,7 @@ class Utility:
         except IndexError:
             # No 24 hour bool given so default to true
             pass
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         dandt, tzerror = self.get_datetime()
         if thebool:
             returnstring = '{:Time: `%H:%M:%S`}'.format(dandt)
@@ -102,7 +102,7 @@ class Utility:
     @commands.command(pass_context=True)
     async def date(self, ctx):
         """Show current date"""
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         dandt, tzerror = self.get_datetime()
         msg = '{:Date: `%d %B %Y`}'.format(dandt)
         await ctx.send(self.bot.bot_prefix + msg)
@@ -110,7 +110,7 @@ class Utility:
     @commands.command(pass_context=True)
     async def code(self, ctx, *, msg):
         """Write text in code format."""
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         await ctx.send("```" + msg.replace("`", "") + "```")
     
     @commands.command(pass_context=True)
@@ -138,7 +138,7 @@ class Utility:
     @commands.command(pass_context=True)
     async def timezonelist(self, ctx):
         """List all available timezones for the timezone command."""
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         embed = discord.Embed()
         embed.description = "[List of valid timezones](https://gist.github.com/anonymous/67129932414d0b82f58758a699a5a0ef)"
         await ctx.send("", embed=embed)
@@ -185,7 +185,7 @@ class Utility:
             em.add_field(name='Input:', value=msg.replace('**', '^').replace('x', '*'), inline=False)
             em.add_field(name='Output:', value=answer, inline=False)
             await ctx.send(content=None, embed=em)
-            await ctx.message.delete()
+            ###await ctx.message.delete()
         else:
             await ctx.send(self.bot.bot_prefix + answer)'''
 
@@ -249,7 +249,7 @@ class Utility:
     async def delete(self, ctx, txt=None, channel=None):
         """Deletes the last message sent or n messages sent. Ex: [p]d 5"""
         if txt:  # If number of seconds/messages are specified
-            await ctx.message.delete()
+            ###await ctx.message.delete()
             deleted = 0
             if txt == "all":
                 limit = 1000
@@ -275,7 +275,7 @@ class Utility:
                         break
         else: # If no number specified, delete last message immediately
             msg = await ctx.message.channel.history(before=ctx.message).get(author=ctx.message.author)
-            await ctx.message.delete()
+            ###await ctx.message.delete()
             try:
                 await msg.delete()
             except:
@@ -307,7 +307,7 @@ class Utility:
                 description='Created in channel: {} in server: {}'.format(ctx.message.channel, ctx.message.guild),
                 content=ctx.message.content[4 + pre:].strip(), name='Output')
             await ctx.send(self.bot.bot_prefix + 'Gist output: ' + url)
-            await ctx.message.delete()
+            ###await ctx.message.delete()
 
     '''@gist.command(pass_context=True)
     async def file(self, ctx, *, msg):
@@ -322,7 +322,7 @@ class Utility:
         except:
             await ctx.send(self.bot.bot_prefix + 'File not found.')
         finally:
-            await ctx.message.delete()'''
+            ###await ctx.message.delete()'''
 
     @commands.command(pass_context=True)
     async def uni(self, ctx, *, msg: str):
@@ -351,7 +351,7 @@ class Utility:
         """Find source of image. Ex: [p]sauce http://i.imgur.com/NIq2U67.png"""
         if not txt:
             return await ctx.send(self.bot.bot_prefix + 'Input a link to check the source. Ex: ``>sauce http://i.imgur.com/NIq2U67.png``')
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         sauce_nao = 'http://saucenao.com/search.php?db=999&url='
         request_headers = {
             "Accept-Language": "en-US,en;q=0.5",
@@ -474,7 +474,7 @@ class Utility:
     @commands.command(aliases=['nick'], pass_context=True, no_pm=True)
     async def nickname(self, ctx, *, txt=None):
         """Change your nickname on a server. Leave empty to remove nick."""
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         await ctx.message.author.edit(nick=txt)
         await ctx.send(self.bot.bot_prefix + 'Changed nickname to: `%s`' % txt)
 
@@ -485,7 +485,7 @@ class Utility:
         You can pick a specific result to use with [p]ud <term> | <result>.
         If no result is specified, the first result will be used.
         """
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         number = 1
         if " | " in msg:
             msg, number = msg.rsplit(" | ", 1)
@@ -519,7 +519,7 @@ class Utility:
         youtube_regex = re.compile('\/watch\?v=[\d\w\-]*')
         async with self.session.get("https://www.youtube.com/results", params={"search_query": search}) as resp:
             response = await resp.text()
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         url = youtube_regex.findall(response)[0]
         await ctx.send("https://www.youtube.com{}".format(url))
 
@@ -557,7 +557,7 @@ class Utility:
     @commands.command(pass_context=True)
     async def hastebin(self, ctx, *, data):
         """Post to Hastebin."""
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         async with self.session.post("https://hastebin.com/documents", data=data) as resp:
             post = await resp.text()
         try:
@@ -624,7 +624,7 @@ class Utility:
     @commands.command(pass_context=True)
     async def roles(self, ctx, *, user=None):
         """Check the roles of a user."""
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         if not user:
             member = ctx.message.author
         else:
@@ -640,7 +640,7 @@ class Utility:
     '''Will need a lot of work to get it to do anything sensible as an authorised bot. @commands.command(pass_context=True)
     async def messagedump(self, ctx, limit, filename, details="yes", reverse="no"):
         """Dump messages."""
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         await ctx.send(self.bot.bot_prefix + "Downloading messages...")
         if not os.path.isdir('message_dump'):
             os.mkdir('message_dump')
@@ -666,7 +666,7 @@ class Utility:
     @commands.group(pass_context=True)
     async def link(self, ctx):
         """Shorten/lengthen URLs"""
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         if ctx.invoked_subcommand is None:
             await ctx.send(self.bot.bot_prefix + "Usage: `link <shorten/lengthen> <url>`")
 
@@ -703,7 +703,7 @@ class Utility:
     @commands.command(pass_context=True, aliases=['getcolor'])
     async def getcolour(self, ctx, *, colour_codes):
         """Posts color of given hex"""
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         colour_codes = colour_codes.split()
         size = (60, 80) if len(colour_codes) > 1 else (200, 200)
         if len(colour_codes) > 5:
@@ -729,7 +729,7 @@ class Utility:
         Example:
         [p]rpoll What time is it? | HAMMER TIME! | SHOWTIME! | time=10
         """
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         options = msg.split(" | ")
         time = [x for x in options if x.startswith("time=")]
         if time:
@@ -780,7 +780,7 @@ class Utility:
     @commands.command(aliases=['clist'])
     async def loaded(self, ctx):
         """Shows loaded/unloaded cogs"""
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         core_cogs = []
         custom = []
         cogs = ["cogs." + os.path.splitext(f)[0] for f in [os.path.basename(f) for f in glob.glob("cogs/*.py")]]
@@ -837,7 +837,7 @@ class Utility:
     @commands.command(aliases=['ra'])
     async def readall(self, ctx, msg: str = None):
         """Marks everything as read. Append `server` to your message to only clear the current server."""
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         if msg == "server":
             await ctx.guild.ack()
             await ctx.send(self.bot.bot_prefix + "Marked current guild as read.")
