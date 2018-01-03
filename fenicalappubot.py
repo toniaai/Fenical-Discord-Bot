@@ -80,10 +80,7 @@ def wizard():
     config = {}
     print("Welcome to the Fenical Appu Discord Bot!\nThis setup wizard will guide you through the initial configuration required to get the bot working.\nThe choices you make in this wizard can be changed at any time by editing the settings/config.json file.\n")
     
-    print("The first step is to set up your token.")
-    print("Go into your Discord window and press Ctrl+Shift+I (Ctrl+Opt+I can also work on macOS)")
-    print("Then, go into the Applications tab (you may have to click the arrow at the top right to get there), expand the 'Local Storage' dropdown, select discordapp, and then grab the token value at the bottom. Here's how it looks: https://imgur.com/h3g9uf6")
-    print("Paste the contents of that entry below.")
+    print("The first step is to set up your token. https://discordapp.com/developers/applications/me")
     print("-------------------------------------------------------------")
     config["token"] = input("| ").strip().strip('"')
     
@@ -103,9 +100,7 @@ def wizard():
         if not config["customcmd_prefix"]:
             print("Empty command prefixes are invalid.")
     
-    print("\nEnter something that will precede every response from the bot. This is to distinguish bot responses from normal user chatter i.e. Entering :robot: will make the bot respond with the robot emoji at the front of every message it sends.")
-    print("-------------------------------------------------------------")
-    config["bot_identifier"] = input("| ").strip()
+    config["bot_identifier"] = ""
     
     input("\nThis concludes the setup wizard. For further setup options (ex. setting up google image search), refer to the wiki.\n\nYour settings:\nInvoke commands with: {cmd}  Ex: {cmd}ping\nInvoke custom commands with: {custom}  Ex: {custom}get good\nYou may restart this wizard at any time by deleting config.json in the settings folder.\n\nPress Enter to start the bot....\n".format(cmd=config["cmd_prefix"], custom=config["customcmd_prefix"]))
   
@@ -884,16 +879,14 @@ if __name__ == '__main__':
         else:
             token = get_config_value('config', 'token')
         try:
-            bot.run(token, bot=False)
+            bot.run(token, bot=True)
         except discord.errors.LoginFailure:
             if not heroku:
                 if _silent:
                     print('Cannot use setup Wizard becaue of silent mode')
                     exit(0)
-                print("It seems the token you entered is incorrect or has changed. If you changed your password or enabled/disabled 2fa, your token will change. Grab your new token. Here's how you do it:\n")
-                print("Go into your Discord window and press Ctrl+Shift+I (Ctrl+Opt+I can also work on macOS)")
-                print("Then, go into the Applications tab (you may have to click the arrow at the top right to get there), expand the 'Local Storage' dropdown, select discordapp, and then grab the token value at the bottom. Here's how it looks: https://imgur.com/h3g9uf6")
-                print("Paste the contents of that entry below.")
+                print("It seems the token you entered is incorrect or has changed.")
+                print("https://discordapp.com/developers/applications/me")
                 print("-------------------------------------------------------------")
                 token = input("| ").strip('"')
                 with open("settings/config.json", "r+", encoding="utf8") as fp:
