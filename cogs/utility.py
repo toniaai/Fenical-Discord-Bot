@@ -29,7 +29,7 @@ from cogs.utils.config import write_config_value
 class Utility:
     def __init__(self, bot):
         self.bot = bot
-        self.session = aiohttp.ClientSession(loop=self.bot.loop, headers={"User-Agent": "AppuSelfBot"})
+        self.session = aiohttp.ClientSession(loop=self.bot.loop, headers={"User-Agent": "FenicalAppuBot"})
 
     @staticmethod
     def get_datetime():
@@ -163,6 +163,10 @@ class Utility:
         self.bot.bot_prefix = msg + ' '
         await ctx.send(self.bot.bot_prefix + 'Prefix changed.')
 
+    # Granted, my attempted proof of concept, which happens to be
+    # (lambda:0).__class__((lambda:0).__code__.__class__(0, 0, 0, 2, 64, b'd\x00\x00d\x01\x00l\x00\x00Z\x00\x00e\x00\x00j\x01\x00d\x02\x00\x83\x01\x00\x01d\x01\x00S', (0, None, 'xeyes'), ('os', 'system'), (), 'hello', '<module>', 1, b'\x0c\x00'), {})()
+    # is protected against. But you can never, ever be too careful with regard to eval on user input.
+    '''Should be rewritten for authorised bot use. Eval on public user input should not be done, ever.
     @commands.command(pass_context=True)
     async def calc(self, ctx, *, msg):
         """Simple calculator. Ex: [p]calc 2+2"""
@@ -183,7 +187,7 @@ class Utility:
             await ctx.send(content=None, embed=em)
             await ctx.message.delete()
         else:
-            await ctx.send(self.bot.bot_prefix + answer)
+            await ctx.send(self.bot.bot_prefix + answer)'''
 
     @commands.command(aliases=['sd'], pass_context=True)
     async def selfdestruct(self, ctx, *, amount):
@@ -305,7 +309,7 @@ class Utility:
             await ctx.send(self.bot.bot_prefix + 'Gist output: ' + url)
             await ctx.message.delete()
 
-    @gist.command(pass_context=True)
+    '''@gist.command(pass_context=True)
     async def file(self, ctx, *, msg):
         """Create gist of file"""
         try:
@@ -318,7 +322,7 @@ class Utility:
         except:
             await ctx.send(self.bot.bot_prefix + 'File not found.')
         finally:
-            await ctx.message.delete()
+            await ctx.message.delete()'''
 
     @commands.command(pass_context=True)
     async def uni(self, ctx, *, msg: str):
@@ -581,7 +585,7 @@ class Utility:
             embed = discord.Embed(title="Number of people playing {}".format(game), description=msg)
             await ctx.send("", embed=embed)
             
-    @commands.command(pass_context=True, aliases=['anim'])
+    '''@commands.command(pass_context=True, aliases=['anim'])
     async def animate(self, ctx, animation):
         """Play an animation from a text file. [p]help animate for more details.
         [p]animate <animation> - Animate a text file.
@@ -615,7 +619,7 @@ class Utility:
             except ValueError:
                 for frame in anim:
                     await ctx.message.edit(content=frame)
-                    await asyncio.sleep(0.2)
+                    await asyncio.sleep(0.2)'''
 
     @commands.command(pass_context=True)
     async def roles(self, ctx, *, user=None):
@@ -633,7 +637,7 @@ class Utility:
         else:
             await ctx.send(self.bot.bot_prefix + "That user has no roles!")
 
-    @commands.command(pass_context=True)
+    '''Will need a lot of work to get it to do anything sensible as an authorised bot. @commands.command(pass_context=True)
     async def messagedump(self, ctx, limit, filename, details="yes", reverse="no"):
         """Dump messages."""
         await ctx.message.delete()
@@ -657,7 +661,7 @@ class Utility:
                 else:
                     async for message in ctx.message.channel.history(limit=int(limit), reverse=True):
                         f.write(message.content + "\n")
-        await ctx.send(self.bot.bot_prefix + "Finished downloading!")
+        await ctx.send(self.bot.bot_prefix + "Finished downloading!")'''
 
     @commands.group(pass_context=True)
     async def link(self, ctx):
@@ -811,10 +815,15 @@ class Utility:
             os.system('cls')
         else:
             try:
-                os.system('clear')
+                # Like cls, unlike clear, actually clears the buffer rather than pointlessly
+                # pushing a bunch of empty lines on it making the scrollback even longer.
+                os.system('reset')
             except:
-                for _ in range(100):
-                    print()
+                try:
+                    os.system('clear')
+                except:
+                    for _ in range(100):
+                        print()
 
         print('Logged in as')
         try:
