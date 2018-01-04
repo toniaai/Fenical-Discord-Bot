@@ -36,7 +36,7 @@ class Misc:
             await ctx.send(content=None, embed=em)
         else:
             await ctx.send('https://github.com/appu1232/Selfbot-for-Discord')
-        await ctx.message.delete()
+        ###await ctx.message.delete()
 
     @commands.group(aliases=['status'], pass_context=True)
     async def stats(self, ctx):
@@ -81,7 +81,7 @@ class Misc:
                 # OS doesn't support retrieval of USS (probably BSD or Solaris)
                 mem_usage = '{:.2f} MiB'.format(__import__('psutil').Process().memory_full_info().rss / 1024 ** 2)
             em.add_field(name=u'\U0001F4BE Memory usage:', value=mem_usage)
-            try:
+            '''try:
                 g = git.cmd.Git(working_dir=os.getcwd())
                 branch = g.execute(["git", "rev-parse", "--abbrev-ref", "HEAD"])
                 g.execute(["git", "fetch", "origin", branch])
@@ -104,14 +104,14 @@ class Misc:
                         status = '%s releases behind%s [Latest updates.](%s)' % (version, branch_note, gist_latest)
                 em.add_field(name=u'\U0001f4bb Update status:', value=status)
             except:
-                pass
+                pass'''
             await ctx.send(content=None, embed=em)
         else:
             msg = '**Bot Stats:** ```Uptime: %s\nMessages Sent: %s\nMessages Received: %s\nMentions: %s\nguilds: %s\nKeywords logged: %s\nGame: %s```' % (
             time, str(self.bot.icount), str(self.bot.message_count), str(self.bot.mention_count),
             str(len(self.bot.guilds)), str(self.bot.keyword_log), game)
             await ctx.send(self.bot.bot_prefix + msg)
-        await ctx.message.delete()
+        ###await ctx.message.delete()
 
     # Embeds the message
     @commands.command(pass_context=True)
@@ -182,7 +182,7 @@ class Misc:
                         color = '0x' + color
 
                 if ptext is title is description is image is thumbnail is color is footer is author is None and 'field=' not in msg:
-                    await ctx.message.delete()
+                    ###await ctx.message.delete()
                     return await ctx.send(content=None,
                                                        embed=discord.Embed(description=msg))
 
@@ -355,7 +355,7 @@ class Misc:
                     em.set_footer(text=text.strip()[5:], icon_url=icon)
                 else:
                     em.set_footer(text=footer)
-            await ctx.message.delete()
+            ###await ctx.message.delete()
             if not ptext:
                 await msg.edit(content=None, embed=em)
             else:
@@ -387,7 +387,7 @@ class Misc:
             fp.truncate()
             json.dump(opt, fp, indent=4)
 
-    @commands.command(pass_context=True, aliases=['stream', 'watching', 'listening'])
+    '''@commands.command(pass_context=True, aliases=['stream', 'watching', 'listening'])
     async def game(self, ctx, *, game: str = None):
         """Set game/stream. Ex: [p]game napping [p]help game for more info
 
@@ -568,7 +568,7 @@ class Misc:
         opt = dataIO.load_json('settings/optional_config.json')
         opt['password'] = avi_config['password']
         dataIO.save_json('settings/optional_config.json', opt)
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         return await ctx.send(self.bot.bot_prefix + 'Password set. Do ``>avatar`` to toggle cycling avatars.')
 
     @commands.command(pass_context=True)
@@ -612,7 +612,7 @@ class Misc:
                 else:
                     await ctx.send("You have not set your password yet in `settings/avatars.json` Please do so and try again")
         else:
-            await ctx.send(self.bot.bot_prefix + 'Could not find image.')
+            await ctx.send(self.bot.bot_prefix + 'Could not find image.')'''
 
 
     @commands.command(pass_context=True)
@@ -665,7 +665,7 @@ class Misc:
         [p]quote <user_mention_name_or_id> | channel=<channel_name> - quotes the last message sent by a specific user in a specified channel
         """
         
-        await ctx.message.delete()
+        ###await ctx.message.delete()
         result = None
         channels = [ctx.channel] + [x for x in ctx.guild.channels if x != ctx.channel and type(x) == discord.channel.TextChannel]
         
@@ -746,7 +746,7 @@ class Misc:
         else:
             await ctx.send(self.bot.bot_prefix + 'No quote found.')
 
-    @commands.command(pass_context=True)
+    '''@commands.command(pass_context=True)
     async def afk(self, ctx, txt: str = None):
         """Set your Discord status for when you aren't online. Ex: [p]afk idle"""
         with open('settings/optional_config.json', 'r+') as fp:
@@ -774,7 +774,7 @@ class Misc:
             fp.truncate()
             json.dump(opt, fp, indent=4)
             await ctx.send(self.bot.bot_prefix + 'Set default afk status. You will now appear as ``{}`` when not on Discord.'.format(
-                                            opt['default_status']))
+                                            opt['default_status']))'''
 
 
 def setup(bot):
