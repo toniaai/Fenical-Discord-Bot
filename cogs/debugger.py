@@ -105,6 +105,9 @@ class Debugger:
     @commands.command(pass_context=True)
     async def debug(self, ctx, *, option: str = None):
         """Shows useful informations to people that try to help you."""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         try:
             if embed_perms(ctx.message):
                 em = discord.Embed(color=0xad2929, title='\ud83e\udd16 Appu\'s Discord Selfbot Debug Infos')
@@ -170,6 +173,9 @@ class Debugger:
     @commands.group(pass_context=True, invoke_without_command=True)
     async def py(self, ctx, *, msg):
         """Python interpreter. See the wiki for more info."""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
 
         if ctx.invoked_subcommand is None:
             env = {
@@ -192,6 +198,9 @@ class Debugger:
     @py.command(pass_context=True)
     async def save(self, ctx, *, msg):
         """Save the code you last ran. Ex: [p]py save stuff"""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         msg = msg.strip()[:-4] if msg.strip().endswith('.txt') else msg.strip()
         os.chdir(os.getcwd())
         if not os.path.exists('%s/cogs/utils/temp.txt' % os.getcwd()):
@@ -216,6 +225,9 @@ class Debugger:
     @py.command(aliases=['start'], pass_context=True)
     async def run(self, ctx, *, msg):
         """Run code that you saved with the save commmand. Ex: [p]py run stuff parameter1 parameter2"""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         # Like in unix, the first parameter is the script name
         parameters = msg.split()
         save_file = parameters[0] # Force scope
@@ -249,6 +261,9 @@ class Debugger:
     @py.command(aliases=['ls'], pass_context=True)
     async def list(self, ctx, txt: str = None):
         """List all saved scripts. Ex: [p]py list or [p]py ls"""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         try:
             if txt:
                 numb = txt.strip()
@@ -283,6 +298,9 @@ class Debugger:
     @py.group(aliases=['vi', 'vim'], pass_context=True)
     async def view(self, ctx, *, msg: str):
         """View a saved script's contents. Ex: [p]py view stuff"""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         msg = msg.strip()[:-4] if msg.strip().endswith('.txt') else msg.strip()
         try:
             if os.path.isfile('cogs/utils/save/%s.txt' % msg):
@@ -298,6 +316,9 @@ class Debugger:
     @py.group(aliases=['rm'], pass_context=True)
     async def delete(self, ctx, *, msg: str):
         """Delete a saved script. Ex: [p]py delete stuff"""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         msg = msg.strip()[:-4] if msg.strip().endswith('.txt') else msg.strip()
         try:
             if os.path.exists('cogs/utils/save/%s.txt' % msg):
@@ -311,7 +332,10 @@ class Debugger:
     @commands.command(pass_context=True)
     async def load(self, ctx, *, msg):
         """Load a module."""
-        await ctx.message.delete()
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
+        ###await ctx.message.delete()
         try:
             if os.path.exists("custom_cogs/{}.py".format(msg)):
                 self.bot.load_extension("custom_cogs.{}".format(msg))
@@ -328,7 +352,10 @@ class Debugger:
     @commands.command(pass_context=True)
     async def unload(self, ctx, *, msg):
         """Unload a module"""
-        await ctx.message.delete()
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
+        ###await ctx.message.delete()
         try:
             if os.path.exists("cogs/{}.py".format(msg)):
                 self.bot.unload_extension("cogs.{}".format(msg))
@@ -345,7 +372,10 @@ class Debugger:
     @commands.command(pass_context=True)
     async def loadall(self, ctx):
         """Loads all core modules"""
-        await ctx.message.delete()
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
+        ###await ctx.message.delete()
         errors = ""
         for cog in os.listdir("cogs"):
             if ".py" in cog:
@@ -362,6 +392,9 @@ class Debugger:
     @commands.command(pass_context=True)
     async def redirect(self, ctx):
         """Redirect STDOUT and STDERR to a channel for debugging purposes."""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         sys.stdout = self.stream
         sys.stderr = self.stream
         self.channel = ctx.message.channel
@@ -370,6 +403,9 @@ class Debugger:
     @commands.command(pass_context=True)
     async def unredirect(self, ctx):
         """Redirect STDOUT and STDERR back to the console for debugging purposes."""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         sys.stdout = sys.__stdout__
         sys.stderr = sys.__stderr__
         self.channel = None

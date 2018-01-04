@@ -129,15 +129,21 @@ class Utility:
             write_config_value("optional_config", "24hours", "false")
             await ctx.send(self.bot.bot_prefix + "Set time to `12 hour` clock")
 
-    '''@commands.command(pass_context=True)
+    @commands.command(pass_context=True)
     async def timezone(self, ctx, *, msg):
         """Set preferred timezone. Use the timezonelist for a full list of timezones."""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         write_config_value("optional_config", "timezone", msg)
         await ctx.send(self.bot.bot_prefix + 'Preferred timezone has been set.')
 
     @commands.command(pass_context=True)
     async def timezonelist(self, ctx):
         """List all available timezones for the timezone command."""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         ###await ctx.message.delete()
         embed = discord.Embed()
         embed.description = "[List of valid timezones](https://gist.github.com/anonymous/67129932414d0b82f58758a699a5a0ef)"
@@ -146,12 +152,18 @@ class Utility:
     @commands.command(pass_context=True)
     async def cmdprefix(self, ctx, *, msg):
         """Set your command prefix for normal commands. Requires a reboot."""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         write_config_value("config", "cmd_prefix", msg)
         await ctx.send(self.bot.bot_prefix + 'Prefix changed. Use `restart` to reboot the bot for the updated prefix.')
 
     @commands.command(pass_context=True)
     async def customcmdprefix(self, ctx, *, msg):
         """Set your command prefix for custom commands."""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         write_config_value("config", "customcmd_prefix", msg)
         self.bot.customcmd_prefix = msg
         await ctx.send(self.bot.bot_prefix + 'Prefix changed.')
@@ -159,9 +171,12 @@ class Utility:
     @commands.command(pass_context=True)
     async def botprefix(self, ctx, *, msg):
         """Set bot prefix"""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         write_config_value("config", "bot_identifier", msg)
         self.bot.bot_prefix = msg + ' '
-        await ctx.send(self.bot.bot_prefix + 'Prefix changed.')'''
+        await ctx.send(self.bot.bot_prefix + 'Prefix changed.')
 
     # Granted, my attempted proof of concept, which happens to be
     # (lambda:0).__class__((lambda:0).__code__.__class__(0, 0, 0, 2, 64, b'd\x00\x00d\x01\x00l\x00\x00Z\x00\x00e\x00\x00j\x01\x00d\x02\x00\x83\x01\x00\x01d\x01\x00S', (0, None, 'xeyes'), ('os', 'system'), (), 'hello', '<module>', 1, b'\x0c\x00'), {})()
@@ -245,9 +260,12 @@ class Utility:
         await msg.delete()
         await killmsg.delete()
 
-    '''@commands.command(aliases=['d'], pass_context=True)
+    @commands.command(aliases=['d'], pass_context=True)
     async def delete(self, ctx, txt=None, channel=None):
         """Deletes the last message sent or n messages sent. Ex: [p]d 5"""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         if txt:  # If number of seconds/messages are specified
             ###await ctx.message.delete()
             deleted = 0
@@ -279,7 +297,7 @@ class Utility:
             try:
                 await msg.delete()
             except:
-                pass'''
+                pass
 
     @commands.command(pass_context=True)
     async def spoiler(self, ctx, *, msg: str):
@@ -808,9 +826,12 @@ class Utility:
             embed.add_field(name="Not Loaded", value="None!", inline=True)
         await ctx.send("", embed=embed)
 
-    '''@commands.command(pass_context=True, aliases=['clearconsole', 'cc', 'clear'])
+    @commands.command(pass_context=True, aliases=['clearconsole', 'cc', 'clear'])
     async def cleartrace(self, ctx):
         """Clear the console."""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         if os.name == 'nt':
             os.system('cls')
         else:
@@ -832,7 +853,7 @@ class Utility:
             pass
         print('User id: ' + str(self.bot.user.id))
         print('------')
-        await ctx.send(self.bot.bot_prefix + 'Console cleared successfully.')'''
+        await ctx.send(self.bot.bot_prefix + 'Console cleared successfully.')
         
     '''@commands.command(aliases=['ra'])
     async def readall(self, ctx, msg: str = None):

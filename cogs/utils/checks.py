@@ -133,6 +133,15 @@ def embed_perms(message):
     return check
 
 
+def botmaster_perms(message):
+    try:
+        check = message.author.permissions_in(message.channel).ban_members
+    except:
+        check = True
+
+    return check
+
+
 def get_user(message, user):
     try:
         member = message.mentions[0]
