@@ -135,9 +135,9 @@ def embed_perms(message):
 
 def botmaster_perms(message):
     try:
-        check = message.author.permissions_in(message.channel).ban_members
+        check = int(message.author.id) == int(dataIO.load_json('settings/config.json').get("botmaster", -1))
     except:
-        check = True
+        check = False
 
     return check
 

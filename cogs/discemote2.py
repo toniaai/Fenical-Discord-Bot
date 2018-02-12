@@ -12,6 +12,7 @@
 # This is a standard Appu-Selfbot component so this should not be an issue unless you've removed it.
 
 import discord, cogs.utils.checks, discord.ext.commands, discord.errors
+from cogs.utils.checks import *
 
 import sys, os, asyncio, subprocess, json, collections, getopt, io, time, zlib
 
@@ -83,6 +84,9 @@ class DiscEmote2(object):
 
         Data is stored in emotes.txt where the other commands will look for it.
         An overview of the most common emote ID to use each name is written to emotes.md"""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         server = ctx.message.server if hasattr(ctx.message, "server") else ctx.message.guild
         argv = ctx.message.content[cogs.utils.checks.cmd_prefix_len():]
         argv = argv.strip().split()
@@ -188,6 +192,9 @@ class DiscEmote2(object):
         Does not redownload those already saved.  Uses the image_dump mechanism, albeit non-conventionally.
 
         Use --delay=(number) to set delay in seconds."""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         argv = ctx.message.content[cogs.utils.checks.cmd_prefix_len():]
         argv = argv.strip().split()
         opts = {"--delay": "0"}
@@ -288,6 +295,9 @@ class DiscEmote2(object):
         That is to say, total number of uses of an identical emote from any source.
 
         Stored in id2apopu.txt where >emoterank will look for it if directed."""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         optcf = open("settings/optional_config.json", "r")
         optc = json.load(optcf)
         optcf.close()
@@ -349,6 +359,9 @@ class DiscEmote2(object):
 
     @discord.ext.commands.command(pass_context = True)
     async def emotelist(self, ctx):
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         server = ctx.message.server if hasattr(ctx.message, "server") else ctx.message.guild
         emotelist = server.emojis
         u2i = lambda i: i.split("/")[-1].split(".")[0]
@@ -362,6 +375,9 @@ class DiscEmote2(object):
         Use --aggregate option to rank by >emoteaggregate data (i.e. including all sources).
         Use --byname to rank by name only, not by ID.
         Use --byid to rank by id only, not by name."""
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         optcf = open("settings/optional_config.json", "r")
         optc = json.load(optcf)
         optcf.close()

@@ -84,6 +84,10 @@ def wizard():
     print("-------------------------------------------------------------")
     config["token"] = input("| ").strip().strip('"')
     
+    print("Give your (the bot admin) user ID (right click your name next to a post and Copy ID) for access to insecure commands:")
+    print("-------------------------------------------------------------")
+    config["botmaster"] = input("| ").strip().strip('"')
+    
     config["cmd_prefix"] = False
     while not config["cmd_prefix"]:
         print("\nEnter the command prefix you want to use for main commands (e.g. if you enter > you will use commands like so: >about).")

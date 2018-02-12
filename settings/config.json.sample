@@ -3,4 +3,5 @@
   "cmd_prefix": ">",
   "customcmd_prefix": ".",
   "bot_identifier": ":robot:"
+  "botmaster": "(your numerical account ID (no, not your discrim))",
 }
