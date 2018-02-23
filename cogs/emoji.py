@@ -3,6 +3,7 @@ import requests
 import io
 import re
 from discord.ext import commands
+from cogs.utils.checks import *
 
 '''Tools relating to custom emoji manipulation and viewing.'''
 
@@ -53,7 +54,7 @@ class Emoji:
         name = "emoji.png"
         return name, url, "N/A", "Official"
 
-    @commands.group(pass_context=True, aliases=['emote'], invoke_without_command=True)
+    @commands.group(pass_context=True, aliases=['emote', 'e'], invoke_without_command=True)
     async def emoji(self, ctx, *, msg):
         """
         View, copy, add or remove emoji.
@@ -106,36 +107,41 @@ class Emoji:
                     await ctx.send(url)
             file.close()
 
-    '''Should work out how to do these properly with reference to requester perms. For now, disable.
-    @emoji.command(pass_context=True, aliases=["steal"])
+    @emoji.command(pass_context=True, aliases=["steal", "<"])
     @commands.has_permissions(manage_emojis=True)
     async def copy(self, ctx, *, msg):
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         ###await ctx.message.delete()
-        msg = re.sub("<:(.+):([0-9]+)>", "\\2", msg)
-
-        match = None
-        exact_match = False
-        for guild in self.bot.guilds:
-            for emoji in guild.emojis:
-                if msg.strip().lower() in str(emoji):
-                    match = emoji
-                if msg.strip() in (str(emoji.id), emoji.name):
-                    match = emoji
-                    exact_match = True
+        msgs = re.sub("<:(.+?):([0-9]+?)>", "\\2", msg).split()
+        for msg in msgs:
+            match = None
+            exact_match = False
+            for guild in self.bot.guilds:
+                for emoji in guild.emojis:
+                    if msg.strip().lower() in str(emoji):
+                        match = emoji
+                    if msg.strip() in (str(emoji.id), emoji.name):
+                        match = emoji
+                        exact_match = True
+                        break
+                if exact_match:
                     break
-            if exact_match:
-                break
 
-        if not match:
-            return await ctx.send(self.bot.bot_prefix + 'Could not find emoji.')
+            if not match:
+                return await ctx.send(self.bot.bot_prefix + 'Could not find emoji.')
 
-        response = requests.get(match.url)
-        emoji = await ctx.guild.create_custom_emoji(name=match.name, image=response.content)
-        await ctx.send(self.bot.bot_prefix + "Successfully added the emoji {0.name} <{1}:{0.name}:{0.id}>!".format(emoji, "a" if emoji.animated else ""))
+            response = requests.get(match.url)
+            emoji = await ctx.guild.create_custom_emoji(name=match.name, image=response.content)
+            await ctx.send(self.bot.bot_prefix + "Successfully added the emoji {0.name} <:{0.name}:{0.id}>!".format(emoji))
 
-    @emoji.command(pass_context=True)
+    @emoji.command(pass_context=True, aliases=["^"])
     @commands.has_permissions(manage_emojis=True)
     async def add(self, ctx, name, url):
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         ###await ctx.message.delete()
         try:
             response = requests.get(url)
@@ -152,6 +158,9 @@ class Emoji:
     @emoji.command(pass_context=True)
     @commands.has_permissions(manage_emojis=True)
     async def remove(self, ctx, name):
+        if not botmaster_perms(ctx.message):
+            await ctx.send(self.bot.bot_prefix + 'You are not allowed to do that.')
+            return
         ###await ctx.message.delete()
         emotes = [x for x in ctx.guild.emojis if x.name == name]
         emote_length = len(emotes)
@@ -162,7 +171,7 @@ class Emoji:
         if emote_length == 1:
             await ctx.send(self.bot.bot_prefix + "Successfully removed the {} emoji!".format(name))
         else:
-            await ctx.send(self.bot.bot_prefix + "Successfully removed {} emoji with the name {}.".format(emote_length, name))'''
+            await ctx.send(self.bot.bot_prefix + "Successfully removed {} emoji with the name {}.".format(emote_length, name))
 
 
 def setup(bot):
