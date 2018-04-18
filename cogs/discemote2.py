@@ -453,7 +453,7 @@ class DiscEmote2(object):
                 elif byn:
                     freqs[myname][myid] = sum(dat[myname].values())
                 elif byi:
-                    if byi in byidat:
+                    if myid in byidat:
                         freqs[myname][myid] = byidat[myid]
                 else:
                     freqs[myname][myid] = dat[myname][myid]
