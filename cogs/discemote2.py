@@ -257,7 +257,7 @@ class DiscEmote2(object):
         purged1frame = 0
         for i in emotelist:
             myid = i.url.split("/")[-1].split(".")[0]
-            myurl = "https://cdn.discordapp.com/emojis/" + myid + (".gif?v=1" if i.animated else ".png")
+            myurl = "https://cdn.discordapp.com/emojis/" + myid + (".gif" if i.animated else ".png")
             myname = i.name
             if not os.path.exists(emdir):
                 os.mkdir(emdir)
@@ -265,6 +265,7 @@ class DiscEmote2(object):
             if i.animated:
                 fn2 = os.path.join(emdir, myname + "---" + myid + ".png")
                 if os.path.exists(fn2):
+                    os.unlink(fn2)
                     purged1frame += 1
             if not os.path.exists(fn):
                 myemotes.append((myurl, fn))
@@ -294,6 +295,7 @@ class DiscEmote2(object):
         fails = []
         for myurl, fn in myemotes:
             targ = os.path.join(top, myurl.split("/")[-1])
+            #print(targ)
             if os.path.exists(targ):
                 os.rename(targ, fn)
             else:
@@ -431,6 +433,10 @@ class DiscEmote2(object):
         f = open("emotes.txt", "r")
         dat = numberdictdict(json.load(f))
         f.close()
+        # Don't need this as purely going through the server ones so we can check if they're animated.
+        #f = open("emotes_ani.txt", "r")
+        #id2ani = json.load(f)
+        #f.close()
         #print("B")
         freqs = collections.defaultdict(lambda:collections.defaultdict(lambda:0))
         allids = set()
@@ -460,10 +466,15 @@ class DiscEmote2(object):
             allids.update(set(apopudat.keys()))
         elif byi:
             byidat = numberdict()
-            for myid in allids:
-                for myname in dat:
-                    if myid in dat[myname]:
-                        byidat[myid] += dat[myname][myid]
+            # Surely this CANNOT be the fastest way of doing this:
+            #for myid in allids:
+            #    for myname in dat:
+            #        if myid in dat[myname]:
+            #            byidat[myid] += dat[myname][myid]
+            # Try this way:
+            for myname in dat:
+                for myid in dat[myname]:
+                    byidat[myid] += dat[myname][myid]
         #print("E")
         for myname in dat:
             for myid in dat[myname]:
@@ -514,7 +525,8 @@ class DiscEmote2(object):
         else:
             template = "<:{}:{}> with {} uses"
         for i in emotelist:
-            print(template.format(i.name, u2i(i.url), -key(i)), file=out)
+            tem2 = template if not i.animated else tem2.replace("<:", "<a:")
+            print(tem2.format(i.name, u2i(i.url), -key(i)), file=out)
         await softsend(self.mybot, ctx, out)
 
     ''' Original implementation, not recommended for use, kept in as a string in case it proves useful to anyone for some reason.
