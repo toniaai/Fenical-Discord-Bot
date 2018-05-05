@@ -31,7 +31,7 @@ except ImportError:
 numberdict = lambda *a:collections.defaultdict(lambda:0, *a)
 numberdictdict = lambda *a: collections.defaultdict(numberdict, *a)
 to_numberdictdict = lambda d: numberdictdict(zip(d.keys(), map(numberdict, d.values())))
-FakeEmojiObject = collections.namedtuple("FakeEmojiObject", ("name", "url"))
+FakeEmojiObject = collections.namedtuple("FakeEmojiObject", ("name", "url", "animated"))
 
 async def softsend(mybot, ctx, f, prefix="", suffix=""):
     if hasattr(mybot, "send_message"):
@@ -96,6 +96,7 @@ class DiscEmote2(object):
             await notification(self.mybot, ctx, "Des not accept positional arguments (see help).")
             return
         emoji = numberdictdict()
+        id2ani = {}
         qurls = []
         for channel in server.channels:
             qurls.append({"channel": channel, "limit": 99})
@@ -129,14 +130,18 @@ class DiscEmote2(object):
                         lasti = i
                         for react in i.reactions:
                             if react.custom_emoji:
-                                # Old Discord.py API: emoji.id is a str
-                                # New Discord.py API: emoji.id is an int
-                                # Convert to str to accept both.
                                 emoji[react.emoji.name][str(react.emoji.id)] += react.count
+                                id2ani[str(react.emoji.id)] = react.emoji.animated
                         for j in i.content.split("<:")[1:]:
                             j = j.split(">", 1)[0].split(":")
                             if len(j) == 2:
                                 emoji[j[0]][j[1]] += 1
+                                id2ani[j[1]] = False # Not animated
+                        for j in i.content.split("<a:")[1:]:
+                            j = j.split(">", 1)[0].split(":")
+                            if len(j) == 2:
+                                emoji[j[0]][j[1]] += 1
+                                id2ani[j[1]] = True # Animated
                 else:
                     print("Skipping %s (not a text channel?)" % channel.name)
                     skips.append(channel.name)
@@ -161,12 +166,17 @@ class DiscEmote2(object):
             skips = []
         if os.path.exists("emotes.txt"):
             os.rename("emotes.txt", "emotes_%011d.txt" % get_timestamp())
+        if os.path.exists("emotes_ani.txt"):
+            os.rename("emotes_ani.txt", "emotes_ani_%011d.txt" % get_timestamp())
         if os.path.exists("emotes.md"):
             os.rename("emotes.md", "emotes_%011d.md" % get_timestamp())
         if os.path.exists("emotes_timestamp.txt"): # Must be dealt with last for the obvious reasons.
             os.unlink("emotes_timestamp.txt")
         f = open("emotes.txt", "w")
         f.write(json.dumps(emoji))
+        f.close()
+        f = open("emotes_ani.txt", "w")
+        f.write(json.dumps(id2ani))
         f.close()
         f = open("emotes_timestamp.txt", "w")
         f.write(json.dumps(start_time))
@@ -216,12 +226,15 @@ class DiscEmote2(object):
             f = open("emotes.txt", "r")
             dat = json.load(f)
             f.close()
+            f = open("emotes_ani.txt", "r")
+            id2ani = json.load(f)
+            f.close()
             for myname in dat:
                 for myid in dat[myname]:
                     #while len(myid) < 18:
                     #    print("reating myid", myid)
                     #    myid = "0" + myid
-                    emotelist.append(FakeEmojiObject(myname, myid))
+                    emotelist.append(FakeEmojiObject(myname, myid, id2ani[myid]))
         else:
             await notification(self.mybot, ctx, "Not using emotescan data (not available).")
         emdir = optc["emote_dump_location"] if "emote_dump_location" in optc else "emotedump"
@@ -241,18 +254,25 @@ class DiscEmote2(object):
                     os.symlink(ntarg, fn2)
         myemotes = []
         await notification(self.mybot, ctx, "Determining ungrabbed emotes...")
+        purged1frame = 0
         for i in emotelist:
             myid = i.url.split("/")[-1].split(".")[0]
-            myurl = "https://cdn.discordapp.com/emojis/" + myid + ".png"
+            myurl = "https://cdn.discordapp.com/emojis/" + myid + (".gif?v=1" if i.animated else ".png")
             myname = i.name
             if not os.path.exists(emdir):
                 os.mkdir(emdir)
-            fn = os.path.join(emdir, myname + "---" + myid + ".png")
+            fn = os.path.join(emdir, myname + "---" + myid + (".gif" if i.animated else ".png"))
+            if i.animated:
+                fn2 = os.path.join(emdir, myname + "---" + myid + ".png")
+                if os.path.exists(fn2):
+                    purged1frame += 1
             if not os.path.exists(fn):
                 myemotes.append((myurl, fn))
             elif os.stat(fn).st_size == 0: # Empty file from a failed grab
                 os.unlink(fn)
                 myemotes.append((myurl, fn))
+        if purged1frame:
+            await notification(self.mybot, ctx, "Purged {} incorrectly downloaded animotes".format(purged1frame))
         if not myemotes:
             await notification(self.mybot, ctx, "No ungrabbed emotes to fetch.")
             return
