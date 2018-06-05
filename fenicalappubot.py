@@ -454,7 +454,7 @@ async def quit(ctx):
 @bot.command(pass_context=True)
 async def reload(ctx, txt: str = None):
     """Reloads all modules."""
-    await ctx.message.delete()
+    #await ctx.message.delete()
     if txt:
         bot.unload_extension(txt)
         try:

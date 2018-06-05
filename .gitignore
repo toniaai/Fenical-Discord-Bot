@@ -14,3 +14,8 @@ cogs/utils/temp.txt
 settings_backup/*
 image_dump/*
 venv/
+emotes*.txt
+emotes*.md
+cogs/utils/finished*.txt
+emotedump
+id2apopu.txt
