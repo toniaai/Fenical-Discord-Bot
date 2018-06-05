@@ -1,6 +1,6 @@
 __copying__ = """
-By Twentysix26: https://github.com/aikaterna/aikaterna-cogs/blob/v3/chatchart/chatchart.py
-Edited by HarJIT.
+By Redjumpman and aikaterna. Edited by HarJIT.
+Original: https://github.com/aikaterna/aikaterna-cogs/blob/v3/chatchart/chatchart.py
 
 In original:
 

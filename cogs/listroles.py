@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
 # -*- mode: python; coding: utf-8 -*-
 
-# This cog by HarJIT may be used, etc under the same terms as Appu's selfbot itself (GPLv3).
+# This cog by HarJIT may be used, etc under the terms of either the GNU GPL v3, or the
+# Mozilla Public License (any version). HarJIT supplies this free of charge with no
+# guarantee of safety, fitness, accuracy or anything else.
 
-# This cog may alternatively be used, etc as outlined in the Mozilla Public License (any version).  To be clear, 
-# these alternative terms apply to this file alone and not to any other selfbot component or dependency.
-
-# HarJIT supplies this free of charge with no guarantee of safety, fitness, accuracy or anything else.
-
-import discord, cogs.utils.checks, discord.ext.commands
+import discord, discord.ext.commands
 
 import getopt, io, time, collections
 
@@ -89,7 +86,7 @@ class Listroles(object):
                         (or 0 posts in --roleactive mode)
         """
         server = ctx.message.server if hasattr(ctx.message, "server") else ctx.message.guild
-        argv = ctx.message.content[cogs.utils.checks.cmd_prefix_len():]
+        argv = ctx.message.content
         argv = argv.strip().split()
         option_names = ["colour", "color", "all", "min=", "level", "roleactive", "scheme-hybrid"]
         option_string = ""
